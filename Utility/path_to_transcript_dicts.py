@@ -68,6 +68,9 @@ def build_path_to_transcript_dict_multi_ling_librispeech_template(root):
                 print(f"not found: {wav_path}")
     return limit_to_n(path_to_transcript)
 
+def build_path_to_transcript_dict_polish():
+    root = "/gdrive/MyDrive/ims-toucan-finetuning/IMS-Toucan-Finetuning/Utility/Karlsson"
+    return limit_to_n(build_path_to_transcript_dict_hui_template(root=root))
 
 def build_path_to_transcript_dict_karlsson():
     root = "/mount/resources/speech/corpora/HUI_German/Karlsson"

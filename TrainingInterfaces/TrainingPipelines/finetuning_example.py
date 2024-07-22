@@ -31,7 +31,7 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
     if model_dir is not None:
         save_dir = model_dir
     else:
-        save_dir = os.path.join(MODELS_DIR, "ToucanTTS_German_and_English")  # RENAME TO SOMETHING MEANINGFUL FOR YOUR DATA
+        save_dir = os.path.join(MODELS_DIR, "ToucanTTS_Polish")  # RENAME TO SOMETHING MEANINGFUL FOR YOUR DATA
     os.makedirs(save_dir, exist_ok=True)
 
     all_train_sets = list()  # YOU CAN HAVE MULTIPLE LANGUAGES, OR JUST ONE. JUST MAKE ONE ConcatDataset PER LANGUAGE AND ADD IT TO THE LIST.
@@ -40,29 +40,25 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
     # =    German Data      =
     # =======================
     german_datasets = list()
-    german_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_karlsson(),
+    german_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_polish(),
                                                      corpus_dir=os.path.join(PREPROCESSING_DIR, "Karlsson"),
-                                                     lang="de"))  # CHANGE THE TRANSCRIPT DICT, THE NAME OF THE CACHE DIRECTORY AND THE LANGUAGE TO YOUR NEEDS
-
-    german_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_eva(),
-                                                     corpus_dir=os.path.join(PREPROCESSING_DIR, "Eva"),
-                                                     lang="de"))  # YOU CAN SIMPLY ADD MODE CORPORA AND DO THE SAME, BUT YOU DON'T HAVE TO, ONE IS ENOUGH
+                                                     lang="pl"))  # CHANGE THE TRANSCRIPT DICT, THE NAME OF THE CACHE DIRECTORY AND THE LANGUAGE TO YOUR NEEDS
 
     all_train_sets.append(ConcatDataset(german_datasets))
 
     # ========================
     # =    English Data      =
     # ========================
-    english_datasets = list()
-    english_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_nancy(),
-                                                      corpus_dir=os.path.join(PREPROCESSING_DIR, "Nancy"),
-                                                      lang="en"))
+    #english_datasets = list()
+    #english_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_nancy(),
+    #                                                  corpus_dir=os.path.join(PREPROCESSING_DIR, "Nancy"),
+    #                                                  lang="en"))
 
-    english_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_ljspeech(),
-                                                      corpus_dir=os.path.join(PREPROCESSING_DIR, "LJSpeech"),
-                                                      lang="en"))
+    #english_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_ljspeech(),
+    #                                                  corpus_dir=os.path.join(PREPROCESSING_DIR, "LJSpeech"),
+    #                                                  lang="en"))
 
-    all_train_sets.append(ConcatDataset(english_datasets))
+    #all_train_sets.append(ConcatDataset(english_datasets))
 
     model = ToucanTTS()
     if use_wandb:
@@ -75,15 +71,15 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
                device=device,
                save_directory=save_dir,
                batch_size=12,  # YOU MIGHT GET OUT OF MEMORY ISSUES ON SMALL GPUs, IF SO, DECREASE THIS.
-               eval_lang="de",  # THE LANGUAGE YOUR PROGRESS PLOTS WILL BE MADE IN
-               warmup_steps=500,
+               eval_lang="pl",  # THE LANGUAGE YOUR PROGRESS PLOTS WILL BE MADE IN
+               warmup_steps=1,
                lr=1e-5,  # if you have enough data (over ~1000 datapoints) you can increase this up to 1e-3 and it will still be stable, but learn quicker.
                # DOWNLOAD THESE INITIALIZATION MODELS FROM THE RELEASE PAGE OF THE GITHUB OR RUN THE DOWNLOADER SCRIPT TO GET THEM AUTOMATICALLY
                path_to_checkpoint=os.path.join(MODELS_DIR, "ToucanTTS_Meta", "best.pt") if resume_checkpoint is None else resume_checkpoint,
                path_to_embed_model=os.path.join(MODELS_DIR, "Embedding", "embedding_function.pt"),
                fine_tune=True if resume_checkpoint is None and not resume else finetune,
                resume=resume,
-               steps=5000,
+               steps=5,
                use_wandb=use_wandb)
     if use_wandb:
         wandb.finish()
