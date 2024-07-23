@@ -172,7 +172,7 @@ def train_loop(net,
             "scheduler"   : scheduler.state_dict(),
             "default_emb" : default_embedding,
         }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
-        delete_old_checkpoints(save_directory, keep=5)
+        delete_old_checkpoints(save_directory, keep=1)
 
         print("\nEpoch:                  {}".format(epoch))
         print("Time elapsed:           {} Minutes".format(round((time.time() - start_time) / 60)))
