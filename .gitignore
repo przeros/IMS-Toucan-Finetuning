@@ -23,7 +23,6 @@ run_phonemizer.py
 
 *.pt
 *.out
-*.wav
 *.flac
 *.json
 *.pyc
