@@ -1,7 +1,7 @@
 .idea/
 tensorboard_logs/
-Corpora/
 Models/
+Corpora/
 audios/
 Preprocessing/glottolog/
 apex/
