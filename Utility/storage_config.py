@@ -1,2 +1,4 @@
 MODELS_DIR = "Models/"
 PREPROCESSING_DIR = "Dataset/"
+DATASET_PATH_FOR_UTILITY = "../../Dataset/"
+DATASET_PATH_FOR_TRAINING_PIPELINES = "../../../Dataset/"

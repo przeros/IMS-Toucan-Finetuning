@@ -15,7 +15,7 @@ from TrainingInterfaces.Text_to_Spectrogram.ToucanTTS.toucantts_train_loop_arbit
 from Utility.corpus_preparation import prepare_fastspeech_corpus
 from Utility.path_to_transcript_dicts import *
 from Utility.storage_config import MODELS_DIR
-from Utility.storage_config import PREPROCESSING_DIR
+from Utility.storage_config import DATASET_PATH_FOR_TRAINING_PIPELINES
 
 
 def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb_resume_id):
@@ -37,11 +37,11 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
     all_train_sets = list()  # YOU CAN HAVE MULTIPLE LANGUAGES, OR JUST ONE. JUST MAKE ONE ConcatDataset PER LANGUAGE AND ADD IT TO THE LIST.
 
     # =======================
-    # =    German Data      =
+    # =    Polish Data      =
     # =======================
     german_datasets = list()
     german_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_polish(),
-                                                     corpus_dir=os.path.join(PREPROCESSING_DIR, "Karlsson"),
+                                                     corpus_dir=DATASET_PATH_FOR_TRAINING_PIPELINES,
                                                      lang="pl"))  # CHANGE THE TRANSCRIPT DICT, THE NAME OF THE CACHE DIRECTORY AND THE LANGUAGE TO YOUR NEEDS
 
     all_train_sets.append(ConcatDataset(german_datasets))
@@ -79,7 +79,7 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
                path_to_embed_model=os.path.join(MODELS_DIR, "Embedding", "embedding_function.pt"),
                fine_tune=True if resume_checkpoint is None and not resume else finetune,
                resume=resume,
-               steps=5,
+               steps=3,
                use_wandb=use_wandb)
     if use_wandb:
         wandb.finish()
