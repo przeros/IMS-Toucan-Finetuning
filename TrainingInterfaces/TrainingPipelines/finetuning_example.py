@@ -15,7 +15,7 @@ from TrainingInterfaces.Text_to_Spectrogram.ToucanTTS.toucantts_train_loop_arbit
 from Utility.corpus_preparation import prepare_fastspeech_corpus
 from Utility.path_to_transcript_dicts import *
 from Utility.storage_config import MODELS_DIR
-from Utility.storage_config import DATASET_PATH_FOR_TRAINING_PIPELINES
+from Utility.storage_config import DATASET_PATH
 
 
 def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb_resume_id):
@@ -41,7 +41,7 @@ def run(gpu_id, resume_checkpoint, finetune, model_dir, resume, use_wandb, wandb
     # =======================
     german_datasets = list()
     german_datasets.append(prepare_fastspeech_corpus(transcript_dict=build_path_to_transcript_dict_polish(),
-                                                     corpus_dir=DATASET_PATH_FOR_TRAINING_PIPELINES,
+                                                     corpus_dir=DATASET_PATH,
                                                      lang="pl"))  # CHANGE THE TRANSCRIPT DICT, THE NAME OF THE CACHE DIRECTORY AND THE LANGUAGE TO YOUR NEEDS
 
     all_train_sets.append(ConcatDataset(german_datasets))
