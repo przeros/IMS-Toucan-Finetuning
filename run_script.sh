@@ -7,7 +7,7 @@ git pull
 # 2. Recursively delete all files except 'dataset' from the directory '../Dataset'
 echo "Recursively cleaning up ../Dataset directory..."
 find ../Dataset -type f ! -name 'dataset' -delete
-find ../Dataset -type d ! -name 'dataset' -exec rm -rf {} +
+find ../Dataset -type d ! -name 'dataset' ! -name 'Dataset' -exec rm -rf {} +
 
 # 3. Run the Python script with the specified parameters
 echo "Running the training pipeline..."
