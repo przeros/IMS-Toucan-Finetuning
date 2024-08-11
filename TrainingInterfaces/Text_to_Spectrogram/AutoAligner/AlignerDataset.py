@@ -57,6 +57,7 @@ class AlignerDataset(Dataset):
             for i in range(loading_processes):
                 key_splits.append(
                     key_list[i * len(key_list) // loading_processes:(i + 1) * len(key_list) // loading_processes])
+            print(f'key_splits: {key_splits}')
             for key_split in key_splits:
                 print(f'key_split: {key_split}')
                 process_list.append(
