@@ -31,6 +31,7 @@ class AlignerDataset(Dataset):
                  device="cpu",
                  phone_input=False,
                  allow_unknown_symbols=False):
+        print(f'loading_processes: {loading_processes}')
         print(f'path_to_transcript_dict: {path_to_transcript_dict}')
         os.makedirs(cache_dir, exist_ok=True)
         if not os.path.exists(os.path.join(cache_dir, "aligner_train_cache.pt")) or rebuild_cache:
