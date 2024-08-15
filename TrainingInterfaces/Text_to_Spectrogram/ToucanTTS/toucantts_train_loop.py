@@ -223,7 +223,7 @@ def train_loop(net,
             check_dict = torch.load(os.path.join(save_directory, "best.pt"), map_location=device)
             net.load_state_dict(check_dict["model"])
 
-        if step_counter > steps:
+        if epoch > steps:
             print(f'TRAINING FINISHED')
             return  # DONE
 
