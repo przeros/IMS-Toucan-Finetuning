@@ -212,6 +212,9 @@ def train_loop(net,
         except IndexError:
             print("generating progress plots failed.")
 
+        print(f'step_counter: {step_counter}')
+        print(f'steps: {steps}')
+        print(f'postnet_start_steps: {postnet_start_steps}')
         if step_counter > 3 * postnet_start_steps:
             # Run manual SWA (torch builtin doesn't work unfortunately due to the use of weight norm in the postflow)
             checkpoint_paths = get_n_recent_checkpoints_paths(checkpoint_dir=save_directory, n=2)
@@ -221,6 +224,7 @@ def train_loop(net,
             net.load_state_dict(check_dict["model"])
 
         if step_counter > steps:
+            print(f'TRAINING FINISHED')
             return  # DONE
 
         net.train()
