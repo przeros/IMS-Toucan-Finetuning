@@ -115,8 +115,11 @@ def build_path_to_transcript_dict_hui_template(root):
         if os.path.isdir(os.path.join(root, el)):
             with open(os.path.join(root, el, "metadata.csv"), "r", encoding="utf8") as file:
                 lookup = file.read()
+            counter = 0
             for line in lookup.split("\n"):
+                counter += 1
                 if line.strip() != "":
+                    print(f'line: {counter}')
                     norm_transcript = line.split("|")[1]
                     wav_path = os.path.join(root, el, "wavs", line.split("|")[0] + ".wav")
                     if os.path.exists(wav_path):
