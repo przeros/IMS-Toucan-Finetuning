@@ -103,7 +103,10 @@ class AlignerDataset(Dataset):
                                                                               "Embedding",
                                                                               "speechbrain_speaker_embedding_ecapa"))
             with torch.no_grad():
+                counter = 0
                 for wave in tqdm(norm_waves):
+                    counter += 1
+                    print(f'wave: {counter}')
                     self.speaker_embeddings.append(
                         speaker_embedding_func_ecapa.encode_batch(wavs=wave.to(device).unsqueeze(0)).squeeze().cpu())
 
