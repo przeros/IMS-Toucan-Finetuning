@@ -5,7 +5,7 @@ from pathlib import Path
 from Utility.storage_config import DATASET_PATH
 
 
-def limit_to_n(path_to_transcript_dict, n=40000):
+def limit_to_n(path_to_transcript_dict, n=100000):
     limited_dict = dict()
     if len(path_to_transcript_dict.keys()) > n:
         for key in random.sample(list(path_to_transcript_dict.keys()), n):
