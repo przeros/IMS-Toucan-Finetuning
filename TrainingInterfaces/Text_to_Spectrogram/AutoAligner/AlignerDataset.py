@@ -85,7 +85,7 @@ class AlignerDataset(Dataset):
             print("Converting into convenient format...")
             norm_waves = list()
             filepaths = list()
-            counter = 1
+            counter = 0
             for datapoint in tqdm(self.datapoints):
                 tensored_datapoints.append([torch.Tensor(datapoint[0]),
                                             torch.LongTensor(datapoint[1]),
@@ -109,10 +109,10 @@ class AlignerDataset(Dataset):
             with torch.no_grad():
                 counter = 0
                 for wave in tqdm(norm_waves):
-                    counter += 1
-                    print(f'wave: {counter}')
+                    print(f'wave: {counter} | path: {filepaths[counter]}')
                     self.speaker_embeddings.append(
                         speaker_embedding_func_ecapa.encode_batch(wavs=wave.to(device).unsqueeze(0)).squeeze().cpu())
+                    counter += 1
 
             # save to cache
             if len(self.datapoints) == 0:
