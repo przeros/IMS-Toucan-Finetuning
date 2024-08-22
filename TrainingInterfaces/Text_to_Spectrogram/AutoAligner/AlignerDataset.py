@@ -77,6 +77,7 @@ class AlignerDataset(Dataset):
             for process in process_list:
                 process.join()
             self.datapoints = list(self.datapoints)
+            self.datapoints.sort(key=lambda x: x[5])
             tensored_datapoints = list()
             # we had to turn all of the tensors to numpy arrays to avoid shared memory
             # issues. Now that the multi-processing is over, we can convert them back
@@ -84,6 +85,7 @@ class AlignerDataset(Dataset):
             print("Converting into convenient format...")
             norm_waves = list()
             filepaths = list()
+            counter = 1
             for datapoint in tqdm(self.datapoints):
                 tensored_datapoints.append([torch.Tensor(datapoint[0]),
                                             torch.LongTensor(datapoint[1]),
@@ -91,6 +93,8 @@ class AlignerDataset(Dataset):
                                             torch.LongTensor(datapoint[3])])
                 norm_waves.append(torch.Tensor(datapoint[-2]))
                 filepaths.append(datapoint[-1])
+                print(f'{counter}: {datapoint[-1]}')
+                counter += 1
 
             self.datapoints = tensored_datapoints
 
@@ -194,6 +198,7 @@ class AlignerDataset(Dataset):
                                                    cached_speech_len,
                                                    norm_wave.cpu().detach().numpy(),
                                                    path])
+
         self.datapoints += process_internal_dataset_chunk
 
     def __getitem__(self, index):
