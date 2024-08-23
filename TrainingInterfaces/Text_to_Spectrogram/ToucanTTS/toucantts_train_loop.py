@@ -144,11 +144,15 @@ def train_loop(net,
                 if step_counter > postnet_start_steps and not torch.isnan(glow_loss):
                     train_loss = train_loss + glow_loss
 
-            l1_losses_total.append(l1_loss.item())
-            duration_losses_total.append(duration_loss.item())
-            pitch_losses_total.append(pitch_loss.item())
-            energy_losses_total.append(energy_loss.item())
-            if step_counter > postnet_start_steps + 500 or fine_tune:
+            if not torch.isnan(l1_loss):
+                l1_losses_total.append(l1_loss.item())
+            if not torch.isnan(duration_loss):
+                duration_losses_total.append(duration_loss.item())
+            if not torch.isnan(pitch_loss):
+                pitch_losses_total.append(pitch_loss.item())
+            if not torch.isnan(energy_loss):
+                energy_losses_total.append(energy_loss.item())
+            if (step_counter > postnet_start_steps + 500 or fine_tune) and glow_loss is not None:
                 # start logging late so the magnitude difference is smaller
                 glow_losses_total.append(glow_loss.item())
 
@@ -225,6 +229,14 @@ def train_loop(net,
 
         if epoch > steps:
             print(f'TRAINING FINISHED')
+            torch.save({
+                "model"       : net.state_dict(),
+                "optimizer"   : optimizer.state_dict(),
+                "step_counter": step_counter,
+                "scheduler"   : scheduler.state_dict(),
+                "default_emb" : default_embedding,
+            }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
+            delete_old_checkpoints(save_directory, keep=1)
             return  # DONE
 
         net.train()
