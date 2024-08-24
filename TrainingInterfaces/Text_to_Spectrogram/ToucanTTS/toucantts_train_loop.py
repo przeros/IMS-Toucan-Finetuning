@@ -169,14 +169,14 @@ def train_loop(net,
         default_embedding = style_embedding_function(
             batch_of_spectrograms=train_dataset[0][2].unsqueeze(0).to(device),
             batch_of_spectrogram_lengths=train_dataset[0][3].unsqueeze(0).to(device)).squeeze()
-        # torch.save({
-        #     "model"       : net.state_dict(),
-        #     "optimizer"   : optimizer.state_dict(),
-        #     "step_counter": step_counter,
-        #     "scheduler"   : scheduler.state_dict(),
-        #     "default_emb" : default_embedding,
-        # }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
-        # delete_old_checkpoints(save_directory, keep=1)
+        torch.save({
+            "model"       : net.state_dict(),
+            "optimizer"   : optimizer.state_dict(),
+            "step_counter": step_counter,
+            "scheduler"   : scheduler.state_dict(),
+            "default_emb" : default_embedding,
+        }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
+        delete_old_checkpoints(save_directory, keep=2)
 
         print("\nEpoch:                  {}".format(epoch))
         print("Time elapsed:           {} Minutes".format(round((time.time() - start_time) / 60)))
@@ -228,15 +228,15 @@ def train_loop(net,
             net.load_state_dict(check_dict["model"])
 
         if epoch > steps:
-            print(f'TRAINING FINISHED')
-            torch.save({
-                "model"       : net.state_dict(),
-                "optimizer"   : optimizer.state_dict(),
-                "step_counter": step_counter,
-                "scheduler"   : scheduler.state_dict(),
-                "default_emb" : default_embedding,
-            }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
-            delete_old_checkpoints(save_directory, keep=1)
+            # print(f'TRAINING FINISHED')
+            # torch.save({
+            #     "model"       : net.state_dict(),
+            #     "optimizer"   : optimizer.state_dict(),
+            #     "step_counter": step_counter,
+            #     "scheduler"   : scheduler.state_dict(),
+            #     "default_emb" : default_embedding,
+            # }, os.path.join(save_directory, "checkpoint_{}.pt".format(step_counter)))
+            # delete_old_checkpoints(save_directory, keep=1)
             return  # DONE
 
         net.train()

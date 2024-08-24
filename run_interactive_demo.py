@@ -10,10 +10,10 @@ from Utility.storage_config import MODELS_DIR
 if __name__ == '__main__':
     warnings.filterwarnings("ignore", category=UserWarning)
 
-    PATH_TO_TTS_MODEL = os.path.join(MODELS_DIR, "ToucanTTS_Meta", "best.pt")
+    PATH_TO_TTS_MODEL = os.path.join(MODELS_DIR, "ToucanTTS_Polish", "best.pt")
     PATH_TO_VOCODER_MODEL = None  # os.path.join(MODELS_DIR, "BigVGAN", "best.pt")
     PATH_TO_REFERENCE_SPEAKER = ""  # audios/speaker_references_for_testing/female_high_voice.wav
-    LANGUAGE = "en"
+    LANGUAGE = "pl"
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     tts = ToucanTTSInterface(device=device, tts_model_path=PATH_TO_TTS_MODEL, vocoder_model_path=PATH_TO_VOCODER_MODEL, faster_vocoder=device == "cuda")
@@ -32,12 +32,24 @@ if __name__ == '__main__':
     print(f"\tDevice Used: {device}")
 
     while True:
-        text = input("\nWhat should I say? (or 'exit')\n")
+        text = input("Pacjent zachorował na żółtaczkę, więc audyt obywatelski dostał wpierdol od ochrony z rzeszowa. Policja niestety nie pomogła.")
         if text == "exit":
             sys.exit()
-        tts.read_aloud(text,
-                       view=True,
-                       blocking=False,
-                       duration_scaling_factor=1.0,
-                       energy_variance_scale=1.0,
-                       pitch_variance_scale=1.0)
+        tts.read_to_file(
+            [text],
+            'audyt_obywatelski.wav',
+            duration_scaling_factor=1.0,
+            pitch_variance_scale=1.0,
+            energy_variance_scale=1.0,
+            silent=False,
+            dur_list=None,
+            pitch_list=None,
+            energy_list=None,
+            increased_compatibility_mode=False
+        )
+        # tts.read_aloud(text,
+        #                view=True,
+        #                blocking=False,
+        #                duration_scaling_factor=1.0,
+        #                energy_variance_scale=1.0,
+        #                pitch_variance_scale=1.0)
