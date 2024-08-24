@@ -1,38 +1,111 @@
-.App {
-  text-align: center;
-}
+/* App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Importing Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  font-family: 'Roboto', sans-serif; /* Use the imported font */
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  width: 1000px; /* Fixed width */
+  margin: 20px; /* Space around the container */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  align-items: center; /* Align items vertically center */
+  width: 100%;
+  gap: 20px; /* Space between elements */
+}
+
+.text-box {
+  flex: 2; /* Takes up more space compared to the button and audio player */
+  min-width: 300px; /* Minimum width for the text box */
+}
+
+.text-box textarea {
+  width: 100%;
+  height: 200px; /* Fixed height */
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 18px; /* Larger font size */
+  box-sizing: border-box;
+  resize: none; /* Disable resizing */
+  font-family: 'Roboto', sans-serif; /* Use the imported font */
+}
+
+.send-button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center; /* Center button vertically within the container */
+}
+
+.send-button:hover {
+  background-color: #2980b9;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 50px; /* Larger spinner */
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+.audio-container {
+  flex: 1; /* Takes up remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center audio player horizontally */
+  max-width: 400px; /* Maximum width for audio player */
+}
+
+.audio-player {
+  width: 100%; /* Full width of container */
+}
+
+.footer {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
