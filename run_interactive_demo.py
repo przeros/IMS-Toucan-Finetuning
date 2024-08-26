@@ -10,10 +10,10 @@ from Utility.storage_config import MODELS_DIR
 if __name__ == '__main__':
     warnings.filterwarnings("ignore", category=UserWarning)
 
-    PATH_TO_TTS_MODEL = os.path.join(MODELS_DIR, "ToucanTTS_Polish", "best.pt")
+    PATH_TO_TTS_MODEL = os.path.join(MODELS_DIR, "ToucanTTS_Polish", "checkpoint_75915.pt")
     PATH_TO_VOCODER_MODEL = None  # os.path.join(MODELS_DIR, "BigVGAN", "best.pt")
     PATH_TO_REFERENCE_SPEAKER = ""  # audios/speaker_references_for_testing/female_high_voice.wav
-    LANGUAGE = "en"
+    LANGUAGE = "pl"
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     tts = ToucanTTSInterface(device=device, tts_model_path=PATH_TO_TTS_MODEL, vocoder_model_path=PATH_TO_VOCODER_MODEL, faster_vocoder=device == "cuda")
