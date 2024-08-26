@@ -13,7 +13,7 @@ if __name__ == '__main__':
     PATH_TO_TTS_MODEL = os.path.join(MODELS_DIR, "ToucanTTS_Polish", "best.pt")
     PATH_TO_VOCODER_MODEL = None  # os.path.join(MODELS_DIR, "BigVGAN", "best.pt")
     PATH_TO_REFERENCE_SPEAKER = ""  # audios/speaker_references_for_testing/female_high_voice.wav
-    LANGUAGE = "pl"
+    LANGUAGE = "en"
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     tts = ToucanTTSInterface(device=device, tts_model_path=PATH_TO_TTS_MODEL, vocoder_model_path=PATH_TO_VOCODER_MODEL, faster_vocoder=device == "cuda")
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     print(f"\tDevice Used: {device}")
 
     while True:
-        text = input("Pacjent zachorował na żółtaczkę, więc audyt obywatelski dostał wpierdol od ochrony z rzeszowa. Policja niestety nie pomogła.")
+        text = input("Type text for synthesis: ")
         if text == "exit":
             sys.exit()
         tts.read_to_file(
