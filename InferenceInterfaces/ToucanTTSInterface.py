@@ -22,7 +22,7 @@ class ToucanTTSInterface(torch.nn.Module):
 
     def __init__(self,
                  device="cpu",  # device that everything computes on. If a cuda device is available, this can speed things up by an order of magnitude.
-                 tts_model_path=os.path.join(MODELS_DIR, f"ToucanTTS_Meta", "best.pt"),  # path to the ToucanTTS checkpoint or just a shorthand if run standalone
+                 tts_model_path=os.path.join(MODELS_DIR, f"ToucanTTS_Polish", "best.pt"),  # path to the ToucanTTS checkpoint or just a shorthand if run standalone
                  embedding_model_path=None,
                  vocoder_model_path=None,  # path to the hifigan/avocodo/bigvgan checkpoint
                  faster_vocoder=True,  # whether to use the quicker HiFiGAN or the better BigVGAN
