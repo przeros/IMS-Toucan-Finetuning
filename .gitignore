@@ -16,7 +16,6 @@ vis/
 
 
 *_graph
-app.py
 gradio*
 *playground*
 run_phonemizer.py
