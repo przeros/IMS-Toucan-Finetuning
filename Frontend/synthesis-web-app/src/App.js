@@ -17,7 +17,7 @@ function App() {
       const response = await axios.post('http://localhost:8000/speak', { text }, {
         responseType: 'blob', // Expecting a binary response
       });
-      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
+      const audioBlob = new Blob([response.data], { type: 'audio/wav' });
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(audioUrl);
     } catch (error) {
